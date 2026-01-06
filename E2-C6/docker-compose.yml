@@ -1,0 +1,19 @@
+services:
+  origin:
+    build: ./origin
+    network_mode: host
+    environment:
+      - HOST=127.0.0.1
+      - PORT=18080
+
+  middlebox:
+    build: ./middlebox
+    network_mode: host
+    depends_on:
+      - origin
+    environment:
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=8443
+      - ORIGIN_HOST=127.0.0.1
+      - ORIGIN_PORT=18080
+      - DEBUG=1
